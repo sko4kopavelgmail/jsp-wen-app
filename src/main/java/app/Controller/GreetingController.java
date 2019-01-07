@@ -66,10 +66,7 @@ public class GreetingController {
     public String loadMain(Model model) {
         user.setCount(user.getCount() + 1);
         userRepository.save(user);
-        List<Node> list = nodeRepository.findAllByUser(user);
-        model.addAttribute("nodes",list);
-        model.addAttribute("time", new Date().toString());
-        model.addAttribute("user", user);
+        loadModel(model);
         return "main";
     }
 
@@ -78,23 +75,32 @@ public class GreetingController {
             Model model,
             @RequestParam Map<String, String> map
     ) {
+        if (!map.get("name").isEmpty())
+            user.setName(map.get("name"));
+        if (!map.get("password").isEmpty())
+            user.setPassword(map.get("password"));
+        if (!map.get("userName").isEmpty() && userRepository.findByUserName(map.get("userName")) == null)
+            user.setUserName(map.get("userName"));
+        if (!map.get("lastName").isEmpty())
+            user.setLastName(map.get("lastName"));
+        userRepository.save(user);
+        loadModel(model);
         return "main";
     }
 
     @PostMapping("/addDream")
     public String addDream(
             @RequestParam("file") MultipartFile file,
-            @RequestParam Map<String,String> map,
+            @RequestParam Map<String, String> map,
             Model model
     ) throws IOException {
         dream = new Dream();
-        if (Utils.validate(map)){
+        if (Utils.validate(map)) {
             dream.setDescription(map.get("description"));
             dream.setStartYear(Integer.parseInt(map.get("Year")));
-            if (map.get("isDone").equals("on")){
+            if (map.get("isDone").equals("on")) {
                 dream.setDone(true);
-            }
-            else
+            } else
                 dream.setDone(false);
         }
         if (file != null) {
@@ -108,12 +114,17 @@ public class GreetingController {
             dream.setFilename(fileUUID);
         }
         dreamRepository.save(dream);
-        node = new Node(user,dream);
+        node = new Node(user, dream);
         nodeRepository.save(node);
+        loadModel(model);
+        return "main";
+    }
+
+    private void loadModel(Model model){
         List<Node> list = nodeRepository.findAllByUser(user);
-        model.addAttribute("nodes",list);
+        model.addAttribute("nodes", list);
         model.addAttribute("time", new Date().toString());
         model.addAttribute("user", user);
-        return "main";
+
     }
 }
