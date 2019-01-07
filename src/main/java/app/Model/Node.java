@@ -1,13 +1,8 @@
 package app.Model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
-@Data
 public class Node {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,4 +21,30 @@ public class Node {
         this.dream = dream;
     }
 
+    public Node() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Dream getDream() {
+        return dream;
+    }
+
+    public void setDream(Dream dream) {
+        this.dream = dream;
+    }
 }

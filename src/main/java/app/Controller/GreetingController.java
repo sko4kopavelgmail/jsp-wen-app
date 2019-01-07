@@ -107,13 +107,13 @@ public class GreetingController {
                 } else
                     dream.setDone(false);
         }
-        try {
+        try {//загрузка файла
             if (file != null) {
                 File uploadDir = new File(uploadPath);
                 if (!uploadDir.exists()) {
                     uploadDir.mkdir();
                 }
-                String fileUUID = UUID.randomUUID().toString();
+                String fileUUID = UUID.randomUUID().toString(); //задание уникального имени
                 fileUUID += "." + file.getOriginalFilename();
                 file.transferTo(new File(uploadPath + "/" + fileUUID));
                 dream.setFilename(fileUUID);
