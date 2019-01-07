@@ -1,4 +1,7 @@
 <html>
+<head>
+    <link rel="stylesheet" href="../static/index.css">
+</head>
 
 <body>
 <h4>Привет, это моя курсовая. Пожалуйста, авторизуйтесь:</h4>

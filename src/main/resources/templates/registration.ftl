@@ -1,4 +1,10 @@
 <html>
+
+<head>
+    <link rel="stylesheet" href="../static/index.css">
+</head>
+
+
 <body>
 <form method="post">
     <input type="text" placeholder="Username" name="userName"/>

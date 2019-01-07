@@ -25,13 +25,13 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String doRegistration(@RequestParam Map<String, String> form, Model model) {
         User newUser = new User();
-        if (Utils.validate(form)) {
+        if (Utils.validate(form) && userRepository.findByUserName(form.get("userName")) == null) {
             newUser.setUserName(form.get("userName"));
             newUser.setPassword(form.get("password"));
             newUser.setName(form.get("firstName"));
             newUser.setLastName(form.get("lastName"));
+            userRepository.save(newUser);
         }
-        userRepository.save(newUser);
         model.addAttribute("message", "Пользователь " + form.get("userName") + " зарегистрирован!");
         return "redirect:/";
     }

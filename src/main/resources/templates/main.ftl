@@ -1,4 +1,9 @@
 <html>
+
+<head>
+    <link rel="stylesheet" href="../static/index.css">
+</head>
+
 <body>
 
 <form method="post" action="/main" enctype="multipart/form-data">
